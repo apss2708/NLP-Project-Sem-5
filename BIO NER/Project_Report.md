@@ -222,6 +222,21 @@ streamlit run app.py
 ```
 Open **http://localhost:8501** in your browser.
 
+### 10.5 GUI Screenshots
+
+The following screenshots demonstrate the working interface:
+
+| Screen | Screenshot |
+|--------|------------|
+| Hero Header & Team Info | ![Hero Header](screenshots/hero_header.png) |
+| Single Text Input Form | ![Single Text Input](screenshots/single_text_input.png) |
+| Results Dashboard & Entity Stats | ![Results Dashboard](screenshots/results_dashboard.png) |
+| Highlighted Entities Inline | ![Highlighted Text](screenshots/highlighted_text.png) |
+| Entity Table with Confidence | ![Entity Table](screenshots/entity_table.png) |
+| Document Upload Tab | ![Upload Document](screenshots/upload_document.png) |
+
+All screenshots are stored in the `screenshots/` folder.
+
 ---
 
 ## 11. Testing & Implementation

@@ -168,10 +168,19 @@ metformin I-DRUG
 
 ## 📸 GUI Screenshots
 
-Add screenshots of your running Streamlit app to the `screenshots/` folder:
-- `screenshots/home.png`
-- `screenshots/entities_highlighted.png`
-- `screenshots/entity_table.png`
+| Hero Header | Single Text Input |
+|-------------|-------------------|
+| ![Hero Header](screenshots/hero_header.png) | ![Single Text](screenshots/single_text_input.png) |
+
+| Results Dashboard | Highlighted Text |
+|-------------------|------------------|
+| ![Results Dashboard](screenshots/results_dashboard.png) | ![Highlighted Text](screenshots/highlighted_text.png) |
+
+| Entity Table | Upload Document |
+|--------------|-----------------|
+| ![Entity Table](screenshots/entity_table.png) | ![Upload Document](screenshots/upload_document.png) |
+
+**Screenshots included:** `screenshots/hero_header.png`, `screenshots/single_text_input.png`, `screenshots/results_dashboard.png`, `screenshots/highlighted_text.png`, `screenshots/entity_table.png`, `screenshots/upload_document.png`
 
 ---
 
