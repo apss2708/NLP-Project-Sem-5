@@ -15,7 +15,7 @@
 **Objective:** Classify text as Positive, Negative, or Neutral  
 **Dataset:** IMDb Movie Reviews (suggested)  
 **Model:** TF-IDF + Logistic Regression / Naive Bayes / SVM  
-**Interface:** Streamlit Web Application  
+**Interface:** Streamlit Web Application — “Reel Verdict” cinematic theme  
 **GitHub Repository:** https://github.com/apss2708/NLP-Project-Sem-5  
 **Project Folder:** `Sentiment analysis/`
 
@@ -23,7 +23,7 @@
 
 ## 1. Abstract
 
-This report presents **Sentiment Analyzer**, a machine learning-based sentiment classification system built as part of the NLP Capstone Project. The system accepts user-entered text (movie or product reviews) and predicts whether the sentiment is **Positive**, **Negative**, or **Neutral**, along with a confidence score. The pipeline uses TF-IDF vectorization for feature extraction and classical ML classifiers (Logistic Regression, Naive Bayes, Linear SVM) for prediction. A polished Streamlit GUI provides an interactive interface for single-review analysis and batch CSV processing, with downloadable results. A rule-based keyword fallback ensures the application remains functional for demonstration even without trained model weights.
+This report presents **Sentiment Analyzer**, a machine learning-based sentiment classification system built as part of the NLP Capstone Project. The system accepts user-entered text (movie or product reviews) and predicts whether the sentiment is **Positive**, **Negative**, or **Neutral**, along with a confidence score. The pipeline uses TF-IDF vectorization for feature extraction and classical ML classifiers (Logistic Regression, Naive Bayes, Linear SVM) for prediction. A polished Streamlit GUI — branded **Reel Verdict** — provides a cinematic editorial interface for single-review analysis and batch CSV processing, with downloadable results. A rule-based keyword fallback ensures the application remains functional for demonstration even without trained model weights.
 
 ---
 
@@ -34,7 +34,7 @@ Businesses and consumers generate vast amounts of textual feedback—movie revie
 
 ### 2.2 Objectives
 1. Collect and prepare a labelled sentiment dataset (movie/product reviews).
-2. Clean and preprocess text (tokenization, stopword removal, lemmatization).
+2. Clean and preprocess text (regex cleaning, tokenization, stopword removal).
 3. Perform exploratory data analysis to understand sentiment distributions.
 4. Convert text into numerical features using TF-IDF.
 5. Train and compare ML classification models (Logistic Regression, Naive Bayes, SVM).
@@ -90,10 +90,12 @@ The included `sample_imdb.csv` contains 21 labelled reviews across Positive, Neg
 - Collapsing multiple whitespaces
 
 ### 5.2 Text Preprocessing
-- **Tokenization:** Using NLTK `word_tokenize`
-- **Stopword Removal:** Removing common English stopwords (NLTK corpus)
-- **Lemmatization:** Using WordNetLemmatizer to reduce words to base form
-- **Pipeline:** Clean → Tokenize → Remove Stopwords → Lemmatize → Rejoin
+- **Tokenization:** Lightweight whitespace tokenization after cleaning
+- **Stopword Removal:** Built-in English stopword list (no external downloads)
+- **Length Filter:** Tokens of three letters or fewer are discarded after stopword removal
+- **Pipeline:** Clean → Tokenize → Remove Stopwords → Rejoin
+
+> The project uses only the Python standard library and scikit-learn for preprocessing, so the app works offline without NLTK corpus downloads.
 
 ---
 
@@ -164,28 +166,36 @@ Metrics are reported as weighted averages to account for class imbalance. A clas
 ## 10. GUI Development (Streamlit)
 
 ### 10.1 Interface Overview
-A polished, website-style Streamlit application (`app.py`) with the following features:
+
+The GUI is branded **Reel Verdict** and uses a cinematic editorial design system: a warm near-black print, antique gold accents, serif display type, film-grain texture, a poster card, ticket stubs and a review scorecard. It is intentionally distinct from Project 16's BioNER Studio theme so the two submissions do not look like the same product.
 
 | Feature | Description |
 |---------|-------------|
-| Hero Header | Gradient banner with project title, team members, roll numbers |
-| Model Selector | Logistic Regression, Naive Bayes, SVM, or Rule-Based Demo |
-| Confidence Threshold Slider | Filter predictions by minimum confidence |
-| Single Review Tab | Enter review text, analyze sentiment |
-| Upload File Tab | Upload CSV for batch analysis |
-| Sentiment Badge | Color-coded result (Positive=green, Negative=red, Neutral=amber) |
-| Confidence Breakdown | Horizontal bar chart for class probabilities |
-| Batch Results | Summary metrics + predictions table + CSV download |
+| Hero | Editorial masthead, film-ticker, and a “poster” card for the project |
+| Critic Selector | Logistic Regression, Naive Bayes, SVM, or Rule-Based Demo |
+| Engine Status | Shows whether trained weights loaded or the rule fallback is active |
+| Confidence Floor | Functional slider: calls below the floor are downgraded to Mixed |
+| Single Review Tab | Review desk with three one-click archive quotes |
+| The Verdict | 0–100 sentiment index, star row, Fresh/Rotten/Mixed stamp, critic-consensus meters |
+| Batch Tab | CSV upload, preview, tallies, proportional verdict bar, custom ledger, CSV export |
+| Batch Persistence | Results survive reruns, including after a download click |
+| Responsive Layout | Sidebar collapses on phones; poster, panels and tally grid stack cleanly |
 
-### 10.2 Color Coding
-| Sentiment | Color | Example |
-|-----------|-------|---------|
-| Positive | Green (#10b981) | "I loved this movie!" |
-| Negative | Red (#ef4444) | "Terrible waste of time." |
-| Neutral | Amber (#f59e0b) | "It was okay." |
+### 10.2 Colour System
+| Role | Colour | Hex |
+|------|--------|-----|
+| Print background | Near-black warm | `#0A0908` |
+| Panel surface | Dark charcoal | `#12100D` |
+| Primary accent | Antique gold | `#D9B36C` |
+| Positive | Sage | `#8FB573` |
+| Neutral | Amber | `#D8AC57` |
+| Negative | Crimson | `#D15A4E` |
+| Body text | Warm cream | `#F3EDE2` |
+
+Gold buttons use near-black labels (not cream), preserving roughly 10:1 contrast. Muted micro-labels stay at full opacity and meet WCAG AA on the dark surfaces.
 
 ### 10.3 Rule-Based Fallback
-If trained model weights are unavailable, the app uses a keyword-based rule engine with positive/negative word lexicons to classify sentiment. This ensures the GUI works for demonstrations.
+If trained model weights are unavailable, the app uses a keyword-based rule engine with positive/negative word lexicons to classify sentiment. This ensures the GUI works for demonstrations even before training.
 
 ### 10.4 How to Run the GUI
 ```bash
@@ -194,6 +204,17 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 Open **http://localhost:8501** in your browser.
+
+### 10.5 Visual Identity and Separation from Project 16
+The sibling BioNER project uses a clinical teal/light “studio” language. Sentiment Analysis instead uses:
+
+- **Type:** Instrument Serif for display, DM Sans for body, DM Mono for micro-labels and scores
+- **Colour:** warm black + antique gold, with sage/amber/crimson reserved for verdicts
+- **Shape:** sharp 2–4 px corners, hairline borders, no white cards or pill badges
+- **Motifs:** film grain, ticker, perforated poster, stamp, scorecard and ticket stubs
+- **Voice:** “screening room”, “the verdict”, “critic consensus”, “dailies” — a review-site vocabulary rather than a lab dashboard
+
+The visual system is implemented entirely in custom CSS inside `app.py`; no external UI kit or JavaScript is required.
 
 ---
 
@@ -205,9 +226,12 @@ Open **http://localhost:8501** in your browser.
 | "The movie was fantastic and I loved it." | Positive |
 | "Terrible plot, complete waste of time." | Negative |
 | "It was okay, nothing special." | Neutral |
+| Positive call below the confidence floor | Downgraded to Mixed, with footnote |
+| Empty review + Screen button | Warning, no prediction |
+| Archive quote button | Textarea updates; previous verdict clears |
 
 ### 11.2 Batch Testing
-Upload a CSV with a `text` column to analyze multiple reviews at once. Results include predicted sentiment and confidence for each row, downloadable as CSV.
+Upload a CSV with a `text` column to analyze multiple reviews at once. Results include tallies, a proportional verdict bar, a confidence-bar ledger, and a downloadable CSV. A confidence floor is applied to each row before the verdict is written.
 
 ---
 
@@ -216,7 +240,7 @@ Upload a CSV with a `text` column to analyze multiple reviews at once. Results i
 | Stage | Technique |
 |-------|-----------|
 | Data Collection | IMDb Movie Reviews / labelled corpus |
-| Preprocessing | HTML/URL removal, stopword removal, lemmatization |
+| Preprocessing | Regex cleaning, built-in stopwords, split tokenization |
 | Feature Engineering | TF-IDF vectorization (unigrams + bigrams) |
 | Model | Logistic Regression / Naive Bayes / Linear SVM |
 | Evaluation | Accuracy, Precision, Recall, F1-score |
@@ -247,7 +271,7 @@ Upload a CSV with a `text` column to analyze multiple reviews at once. Results i
 
 ## 15. Conclusion
 
-Sentiment Analyzer demonstrates a complete NLP pipeline—from text preprocessing and TF-IDF feature engineering to ML classification and a user-friendly Streamlit GUI. The system classifies reviews as Positive, Negative, or Neutral with confidence scores, supporting both single-review and batch analysis. The rule-based fallback ensures the application remains fully demonstrable for academic evaluation.
+Sentiment Analyzer demonstrates a complete NLP pipeline—from text preprocessing and TF-IDF feature engineering to ML classification and a user-friendly Streamlit GUI. The system classifies reviews as Positive, Negative, or Neutral with confidence scores, supporting both single-review and batch analysis. The **Reel Verdict** interface gives the project a distinct cinematic identity while keeping the model layer transparent: the sentiment index, critic-consensus meters, engine status and confidence floor all expose how a verdict was reached. The rule-based fallback ensures the application remains fully demonstrable for academic evaluation.
 
 ---
 
@@ -266,8 +290,7 @@ All three group members contributed equally to both projects in Group 8:
 1. Pang, B., & Lee, L. (2008). "Opinion Mining and Sentiment Analysis." *Foundations and Trends in Information Retrieval*.
 2. Bird, S., et al. (2009). "Natural Language Processing with Python." O'Reilly.
 3. Scikit-learn Documentation: https://scikit-learn.org
-4. NLTK Documentation: https://www.nltk.org
-5. Streamlit Documentation: https://docs.streamlit.io
+4. Streamlit Documentation: https://docs.streamlit.io
 
 ---
 

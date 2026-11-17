@@ -1,32 +1,51 @@
-# 💬 Project 1 – Sentiment Analysis
+# 🎬 Project 1 – Sentiment Analysis
 
 **Group 8**  
 **Team Members:** Ayush Singh (2401730015) · Krish Jaidka (2401730188) · Sahil Shrivastava (2401730016)
 
 **Objective:** Identify whether a given sentence, review, or feedback is Positive, Negative, or Neutral.  
 **Model:** TF-IDF + ML (Logistic Regression, Naive Bayes, SVM)  
-**GUI:** Streamlit web application  
-**Dataset:** IMDb Movie Reviews (suggested)
+**GUI:** Streamlit — the **Reel Verdict** cinematic screening room  
+**Dataset:** IMDb Movie Reviews (sample included; swap in the full corpus for stronger results)
 
 ---
 
 ## 📋 Project Overview
 
-This project builds a Sentiment Analysis system that classifies text input as Positive, Negative, or Neutral.
+This project builds a Sentiment Analysis system that classifies text as Positive, Negative, or Neutral.
 
 ### What the system does
-- Accepts raw text input (movie/product reviews)
-- Cleans and preprocesses text (tokenization, stopword removal, lemmatization)
-- Converts text into numerical features using TF-IDF
-- Trains machine learning classification models
-- Predicts sentiment of new user-entered text with confidence scores
+- Accepts raw text input (movie/product reviews) or a CSV of reviews
+- Cleans text with regex (HTML, URLs, emails, punctuation and digits removed)
+- Tokenizes with a lightweight split and removes stopwords using a built-in list — no NLTK downloads required
+- Converts text into numerical features using TF-IDF (unigrams + bigrams)
+- Trains and compares classical ML classifiers
+- Predicts sentiment with confidence scores, a 0–100 sentiment index, and a confidence floor
+- Falls back to a keyword-based critic when model weights are unavailable
 
 ### Supported Sentiment Classes
-| Label | Emoji | Description |
-|-------|-------|-------------|
-| Positive | 😊 | Favorable review |
-| Negative | 😞 | Unfavorable review |
-| Neutral | 😐 | Mixed or indifferent review |
+| Label | Meaning | Interface treatment |
+|-------|---------|---------------------|
+| Positive | Favorable review | Sage dot · **Fresh** stamp |
+| Negative | Unfavorable review | Crimson dot · **Rotten** stamp |
+| Neutral | Mixed or indifferent | Amber dot · **Mixed** stamp |
+
+---
+
+## 🎨 Visual Identity — “Reel Verdict”
+
+This project deliberately uses a **different design system** from Project 16 (BioNER Studio), so the two GUIs do not look like the same product.
+
+| | Project 16 — BioNER Studio | Project 1 — Reel Verdict |
+|---|---|---|
+| Mood | Clinical biotech studio | Cinematic editorial / film print |
+| Background | Light with teal accents | Near-black warm print (#0A0908) |
+| Accent | Teal / cyan | Antique gold (#D9B36C) |
+| Display type | Space Grotesk | Instrument Serif |
+| Body type | Inter | DM Sans + DM Mono micro-labels |
+| Motifs | Rounded cards, badges | Film grain, poster card, ticket stubs, scorecard, critic meters |
+
+Everything is implemented with custom CSS in `app.py`; no external UI kit is required. The chosen cream/gold/muted colours meet WCAG AA contrast on the dark background, and buttons use near-black labels on gold rather than light-on-gold.
 
 ---
 
@@ -36,23 +55,27 @@ This project builds a Sentiment Analysis system that classifies text input as Po
 Sentiment analysis/
 ├── README.md                      # This file
 ├── requirements.txt               # Python dependencies
-├── app.py                         # Streamlit GUI application
+├── app.py                         # Streamlit GUI — Reel Verdict
 ├── .streamlit/
-│   └── config.toml                # Streamlit theme config
-├── .gitignore                     # Git ignore rules
+│   └── config.toml                # Dark cinematic theme tokens
+├── .gitignore                     # Git ignore rules (models/ ignored, sample CSV kept)
 ├── src/
 │   ├── __init__.py
-│   ├── preprocess.py              # Text cleaning & preprocessing
-│   ├── train_model.py             # TF-IDF + ML model training
+│   ├── preprocess.py              # Regex cleaning, tokenization, built-in stopwords
+│   ├── train_model.py             # TF-IDF + ML training pipeline
 │   ├── evaluate.py                # Accuracy / Precision / Recall / F1
-│   └── inference.py               # Prediction logic (ML + rule-based fallback)
+│   └── inference.py               # ML prediction (incl. SVM scores) + rule-based fallback
 ├── data/
-│   ├── sample_imdb.csv            # Sample labelled sentiment data
+│   ├── sample_imdb.csv            # 21 labelled sample reviews (included)
 │   └── README.md                  # Dataset format instructions
-├── models/                        # Trained model weights (gitignored – retrain after clone)
+├── models/                        # Trained weights (gitignored — retrain after clone)
 ├── EDA.ipynb                      # Exploratory Data Analysis notebook
 ├── Project_Report.md              # Full project report
-└── screenshots/                   # GUI screenshots (add your own here)
+└── screenshots/
+    ├── hero.png                   # Opening-night hero + poster
+    ├── single_review.png          # Verdict scorecard
+    ├── batch_results.png          # Batch dailies ledger
+    └── mobile.png                 # Responsive mobile layout
 ```
 
 ---
@@ -61,40 +84,51 @@ Sentiment analysis/
 
 ### 1. Clone the repository
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/apss2708/NLP-Project-Sem-5.git
 cd "NLP Project Sem 5/Sentiment analysis"
 ```
 
 ### 2. Create a virtual environment (recommended)
 ```bash
-python -m venv venv
-source venv/bin/activate      # Linux/Mac
+python3 -m venv venv
+source venv/bin/activate      # Linux / macOS
 venv\Scripts\activate         # Windows
 ```
+
+> On macOS, use `python3` if `python` is not on your PATH.
 
 ### 3. Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
+The app runs immediately without model weights thanks to the rule-based critic. To use the ML models, train them first (next section).
+
 ---
 
 ## 🛠️ How to Train the Model
 
 ```bash
-python -m src.train_model
+python3 -m src.train_model
 ```
 
 This will:
 1. Load `data/sample_imdb.csv`
-2. Preprocess text (clean, tokenize, lemmatize)
-3. Split into train/test sets
-4. Vectorize using TF-IDF
-5. Train the selected ML model (Logistic Regression by default)
-6. Save the model to `models/sentiment_logistic_regression.joblib`
+2. Clean the text, tokenize, and remove stopwords (built-in list, no downloads)
+3. Split into train/test sets with stratification
+4. Vectorize using TF-IDF (5,000 features, unigrams + bigrams)
+5. Train Logistic Regression (the default critic)
+6. Save the pipeline to `models/sentiment_logistic_regression.joblib`
 7. Print evaluation metrics
 
-> **Note:** Replace `data/sample_imdb.csv` with a larger IMDb Movie Reviews dataset for better results.
+To train a different classifier, call the trainer from Python:
+
+```python
+from src.train_model import train
+train("naive_bayes")   # or "svm"
+```
+
+> **Note:** The bundled dataset contains only 21 reviews, so metrics are meant to demonstrate the pipeline, not production accuracy. Replace `data/sample_imdb.csv` with the full IMDb dataset (50,000 reviews) for meaningful performance.
 
 ---
 
@@ -104,21 +138,47 @@ This will:
 streamlit run app.py
 ```
 
-Then open: **http://localhost:8501**
+Then open **http://localhost:8501**.
 
 ### GUI Features
-1. **Single Review Tab** – Enter review text and analyze sentiment
-2. **Upload File Tab** – Upload a CSV with a `text` column for batch analysis
-3. **Sidebar** – Choose model, set confidence threshold, view class info
-4. **Output** – Sentiment badge, confidence breakdown bar chart, download CSV
+
+1. **Screening room — Single review**  
+   Paste a review, or load one of three archive pull quotes. The verdict panel returns a 0–100 sentiment index, star rating, verdict stamp and the model's class probabilities as “critic consensus” meters.
+
+2. **Confidence floor**  
+   The sidebar slider is functional: any prediction below the floor is downgraded to **Mixed**, with a footnote explaining the underlying model call. Defaults to 45%.
+
+3. **Critic selector**  
+   Choose Logistic Regression, Naive Bayes, SVM or the Rule-Based Demo. The engine chip reports whether real weights were loaded or the fallback is active, so the interface never silently pretends.
+
+4. **Batch screening — Box office dailies**  
+   Upload a CSV with a `text` column. The app shows row/column counts, a preview, batch tallies, a proportional verdict bar, a custom ledger with per-row confidence bars, and a CSV export. Results persist across reruns, so downloading does not clear the ledger.
+
+5. **Projection room sidebar**  
+   Model controls, ticket key, and project notes in the same editorial language.
+
+### Screenshots
+
+#### Opening night
+![Reel Verdict hero](screenshots/hero.png)
+
+#### The verdict scorecard
+![Single review verdict](screenshots/single_review.png)
+
+#### Batch dailies
+![Batch results ledger](screenshots/batch_results.png)
+
+#### Mobile layout
+<img src="screenshots/mobile.png" alt="Reel Verdict on mobile" width="360">
 
 ---
 
 ## 📊 Evaluation
 
 Run evaluation after training:
+
 ```bash
-python -m src.evaluate
+python3 -m src.evaluate
 ```
 
 Reports:
@@ -132,15 +192,14 @@ Reports:
 
 Each row contains a review and its sentiment label.
 
-Example:
-```
+```csv
 text,label
 "The movie was fantastic and I loved every minute of it.",Positive
 "Terrible plot, terrible acting, complete waste of time.",Negative
 "It was okay, nothing special but watchable.",Neutral
 ```
 
-**Required columns:** `text`, `label`
+**Required columns:** `text`, `label` (training); `text` only for batch prediction.
 
 ---
 
@@ -149,33 +208,35 @@ text,label
 | Stage | Technique |
 |-------|-----------|
 | Data Collection | IMDb Movie Reviews / labelled review corpus |
-| Preprocessing | HTML/URL removal, stopword removal, lemmatization |
-| Feature Engineering | TF-IDF vectorization (unigrams + bigrams) |
-| Model | Logistic Regression / Naive Bayes / Linear SVM |
-| Training | Train/test split, stratified sampling |
+| Cleaning | Lowercase, HTML/URL/email removal, letters only, whitespace collapse |
+| Preprocessing | Split tokenization, built-in English stopword removal, length filter |
+| Feature Engineering | TF-IDF vectorization (unigrams + bigrams, 5,000 features) |
+| Models | Logistic Regression / Multinomial Naive Bayes / Linear SVM |
+| Training | Stratified train/test split, fixed random state |
 | Evaluation | Accuracy, Precision, Recall, F1-score, Confusion Matrix |
-| Inference | Trained pipeline or rule-based fallback |
+| Inference | Trained pipeline (SVM scores normalised to probabilities) or keyword fallback |
+| Interface | Streamlit + custom editorial CSS, Instrument Serif / DM Sans / DM Mono |
 
 ---
 
-## 📸 GUI Screenshots
+## ⚠️ Limitations
 
-Add screenshots of your running Streamlit app to the `screenshots/` folder:
-- `screenshots/hero_header.png`
-- `screenshots/single_review.png`
-- `screenshots/prediction_result.png`
-- `screenshots/batch_upload.png`
+- The bundled 21-row sample is for demonstration; train on a larger corpus for real accuracy.
+- Model weights are gitignored — retrain after cloning to use ML rather than the fallback.
+- English-only preprocessing.
+- Sarcasm and domain-specific slang remain difficult.
+- Predictions are assistive reading notes, not definitive reviews.
 
 ---
 
 ## ✅ Submission Checklist
 
-- [ ] Complete source code uploaded to GitHub
-- [ ] `requirements.txt` included
-- [ ] `README.md` with setup & execution steps
-- [ ] Trained model folder (`models/`) or instructions to train
-- [ ] Screenshots of the working GUI
-- [ ] Jupyter notebook showing EDA and training
+- [x] Complete source code uploaded to GitHub
+- [x] `requirements.txt` included
+- [x] `README.md` with setup & execution steps
+- [x] Trained model folder (`models/`) or instructions to train
+- [x] Screenshots of the working GUI
+- [x] Jupyter notebook showing EDA and training
 - [ ] PPT covering both group projects (Project 16 + Project 1)
 - [ ] GitHub repository link submitted via Google Form
 
@@ -186,9 +247,9 @@ Add screenshots of your running Streamlit app to the `screenshots/` folder:
 All three group members contributed equally:
 - Dataset collection & preprocessing
 - Model development & evaluation
-- Streamlit GUI development
+- Streamlit GUI development & visual design
 - Testing, documentation & GitHub deployment
 
 ---
 
-**Educational capstone project.** Model predictions are assistive, not clinical diagnoses.
+**Educational capstone project.** Model predictions are assistive, not clinical or professional advice.

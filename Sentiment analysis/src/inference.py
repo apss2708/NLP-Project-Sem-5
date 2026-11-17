@@ -48,8 +48,18 @@ class SentimentPredictor:
 
     def _predict_ml(self, text: str) -> Dict:
         cleaned = preprocess(text)
-        proba = self.model.predict_proba([cleaned])[0]
         classes = list(self.model.classes_)
+        if hasattr(self.model, "predict_proba"):
+            proba = self.model.predict_proba([cleaned])[0]
+        else:
+            # Linear SVM has no predict_proba; map decision scores to probabilities.
+            scores = np.atleast_2d(self.model.decision_function([cleaned]))
+            if scores.shape[1] == 1:  # binary classifier
+                positive = 1.0 / (1.0 + np.exp(-scores[:, 0]))
+                proba = np.column_stack([1.0 - positive, positive])[0]
+            else:
+                shifted = np.exp(scores - scores.max(axis=1, keepdims=True))
+                proba = (shifted / shifted.sum(axis=1, keepdims=True))[0]
         idx = int(np.argmax(proba))
         label = classes[idx]
         confidence = float(proba[idx])

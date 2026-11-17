@@ -6,7 +6,7 @@
 - Krish Jaidka – 2401730188
 - Sahil Shrivastava – 2401730016
 
-This repository contains **two complete NLP capstone projects** developed from scratch with working Streamlit GUIs, trained models, evaluation, and documentation.
+This repository contains **two complete NLP capstone projects** developed from scratch with working Streamlit GUIs, reproducible training pipelines, evaluation, and documentation.
 
 ---
 
@@ -30,10 +30,33 @@ NLP Project Sem 5/
 │   │   ├── sample_biomedical_ner.conll   # Sample labelled biomedical data
 │   │   └── README.md               # Dataset format instructions
 │   └── models/                     # Trained BioBERT weights (gitignored – retrain after clone)
-├── Sentiment analysis/             # Project 1 – Sentiment Analysis
-│   └── README.md                   # Placeholder / project setup
+├── Sentiment analysis/             # Project 1 – Sentiment Analysis (Reel Verdict)
+│   ├── app.py                      # Streamlit GUI (cinematic Reel Verdict UI)
+│   ├── requirements.txt            # Python dependencies
+│   ├── README.md                   # Project-specific setup & instructions
+│   ├── .streamlit/config.toml      # Dark cinematic theme config
+│   ├── .gitignore                  # Git ignore rules
+│   ├── src/
+│   │   ├── __init__.py
+│   │   ├── preprocess.py           # Regex cleaning, tokenization, built-in stopwords
+│   │   ├── train_model.py          # TF-IDF + ML training
+│   │   ├── evaluate.py             # Accuracy / Precision / Recall / F1
+│   │   └── inference.py            # ML prediction + rule-based fallback
+│   ├── data/
+│   │   ├── sample_imdb.csv         # 21 labelled sample reviews
+│   │   └── README.md               # Dataset format instructions
+│   ├── screenshots/                # Hero, verdict, batch and mobile screenshots
+│   ├── EDA.ipynb                   # Exploratory Data Analysis
+│   ├── Project_Report.md           # Full project report
+│   └── models/                     # Trained weights (gitignored – retrain after clone)
 └── README.md                       # This file
 ```
+
+### Two distinct interface identities
+
+| Project 16 — BioNER Studio | Project 1 — Reel Verdict |
+|---|---|
+| <img src="BIO%20NER/screenshots/results_dashboard.png" width="100%"> | <img src="Sentiment%20analysis/screenshots/single_review.png" width="100%"> |
 
 ---
 
@@ -70,21 +93,34 @@ See [`BIO NER/README.md`](BIO NER/README.md) for full details.
 ## 📊 Project 1 – Sentiment Analysis (Sentiment analysis folder)
 
 **Objective:** Identify whether a given sentence, review, or feedback is Positive, Negative, or Neutral.  
-**Dataset:** IMDb Movie Reviews  
-**Features:** TF-IDF vectorization, ML classification (Naive Bayes / Logistic Regression / SVM), Streamlit GUI with confidence score.
+**Dataset:** IMDb Movie Reviews (21-row sample included)  
+**Model:** TF-IDF + Logistic Regression / Naive Bayes / Linear SVM  
+**Interface:** Streamlit — **Reel Verdict**, a cinematic near-black + antique-gold screening room with a sentiment scorecard, critic-consensus meters, batch ledger and responsive mobile layout. Deliberately distinct from the BioNER Studio theme.
 
-See [`Sentiment analysis/README.md`](Sentiment analysis/README.md) for setup instructions.
+### Quick start
+```bash
+cd "Sentiment analysis"
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+### Train the model
+```bash
+python3 -m src.train_model
+```
+
+See [`Sentiment analysis/README.md`](Sentiment%20analysis/README.md) for full details, screenshots and design notes.
 
 ---
 
 ## ✅ Submission Checklist (per project)
 
-- [ ] Complete source code uploaded to GitHub
-- [ ] `requirements.txt` included
-- [ ] `README.md` with setup & execution steps
-- [ ] Trained model or instructions to train
-- [ ] Screenshots of the working GUI
-- [ ] Jupyter notebook showing EDA and training (optional but recommended)
+- [x] Complete source code uploaded to GitHub
+- [x] `requirements.txt` included
+- [x] `README.md` with setup & execution steps
+- [x] Trained model or instructions to train
+- [x] Screenshots of the working GUI
+- [x] Jupyter notebook showing EDA and training (optional but recommended)
 - [ ] PPT covering both projects
 - [ ] GitHub repository link submitted via Google Form
 
