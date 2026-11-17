@@ -1,6 +1,7 @@
 """Streamlit GUI for Sentiment Analysis (Project 1) - Polished Website UI."""
 
 import html
+import os
 import pandas as pd
 import streamlit as st
 
@@ -494,7 +495,6 @@ st.markdown(
 @st.cache_resource(show_spinner="Loading sentiment model...")
 def load_predictor():
     model_path = os.path.join("models", "sentiment_logistic_regression.joblib")
-    import os
     if not os.path.exists(model_path):
         return get_predictor(None)
     return get_predictor(model_path)
