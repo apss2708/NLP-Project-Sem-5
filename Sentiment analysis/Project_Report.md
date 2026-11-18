@@ -167,7 +167,7 @@ Metrics are reported as weighted averages to account for class imbalance. A clas
 
 ### 10.1 Interface Overview
 
-The GUI is branded **Reel Verdict** and uses a cinematic editorial design system: a warm near-black print, antique gold accents, serif display type, film-grain texture, a poster card, ticket stubs and a review scorecard. It is intentionally distinct from Project 16's BioNER Studio theme so the two submissions do not look like the same product.
+The GUI is branded **Reel Verdict** and uses a cinematic editorial design system: a warm near-black print, antique gold accents, serif display type, film-grain texture, a poster card, ticket stubs and a review scorecard. It is intentionally distinct from Project 16's BioNER Clinical theme so the two submissions do not look like the same product.
 
 | Feature | Description |
 |---------|-------------|

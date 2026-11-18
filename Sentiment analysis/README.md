@@ -34,16 +34,16 @@ This project builds a Sentiment Analysis system that classifies text as Positive
 
 ## 🎨 Visual Identity — “Reel Verdict”
 
-This project deliberately uses a **different design system** from Project 16 (BioNER Studio), so the two GUIs do not look like the same product.
+This project deliberately uses a **different design system** from Project 16 (BioNER Clinical), so the two GUIs do not look like the same product.
 
-| | Project 16 — BioNER Studio | Project 1 — Reel Verdict |
+| | Project 16 — BioNER Clinical | Project 1 — Reel Verdict |
 |---|---|---|
-| Mood | Clinical biotech studio | Cinematic editorial / film print |
-| Background | Light with teal accents | Near-black warm print (#0A0908) |
-| Accent | Teal / cyan | Antique gold (#D9B36C) |
-| Display type | Space Grotesk | Instrument Serif |
-| Body type | Inter | DM Sans + DM Mono micro-labels |
-| Motifs | Rounded cards, badges | Film grain, poster card, ticket stubs, scorecard, critic meters |
+| Mood | Clinical journal / lab instrument | Cinematic editorial / film print |
+| Background | Porcelain paper (#F6F7F3) | Near-black warm print (#0A0908) |
+| Accent | Deep petrol (#0B4F52) | Antique gold (#D9B36C) |
+| Display type | Source Serif 4 | Instrument Serif |
+| Body type | Public Sans + IBM Plex Mono micro-labels | DM Sans + DM Mono micro-labels |
+| Motifs | Compliance strip, model card, protocol steps, finding ledger, audit metadata | Film grain, poster card, ticket stubs, scorecard, critic meters |
 
 Everything is implemented with custom CSS in `app.py`; no external UI kit is required. The chosen cream/gold/muted colours meet WCAG AA contrast on the dark background, and buttons use near-black labels on gold rather than light-on-gold.
 

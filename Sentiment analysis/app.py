@@ -2,7 +2,7 @@
 
 Visual identity: "Reel Verdict" — a cinematic editorial screening room.
 Near-black film print, antique gold, serif display type, scorecards and
-critic-consensus meters. Deliberately distinct from the BioNER Studio theme.
+critic-consensus meters. Deliberately distinct from the BioNER Clinical theme.
 """
 
 import html
