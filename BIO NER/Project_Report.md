@@ -117,6 +117,7 @@ EDA was performed in `EDA.ipynb` and included:
 - **Entities per sentence:** Distribution of entity token counts per sentence.
 
 Key visualizations generated:
+
 - Bar chart of entity type counts.
 - Bar chart of BIO tag prefixes.
 - Histogram of sentence lengths.
@@ -170,6 +171,7 @@ The best model (lowest validation loss) is saved to `models/biobert_ner/`.
 Run: `python -m src.evaluate`
 
 Metrics computed using `seqeval`:
+
 - **Precision:** Proportion of predicted entities that are correct.
 - **Recall:** Proportion of true entities that were predicted.
 - **F1-Score:** Harmonic mean of Precision and Recall.
@@ -302,13 +304,15 @@ Open **http://localhost:8501** in your browser.
 
 ### 10.8 GUI Screenshots
 
-| Screen | Screenshot |
-|--------|------------|
-| Clinical workspace and model card | ![Hero](screenshots/hero.png) |
-| Structured report and annotated source | ![Report](screenshots/report.png) |
-| Finding index and exports | ![Findings](screenshots/findings.png) |
-| Document intake with generated report | ![Document intake](screenshots/document_intake.png) |
-| Mobile layout | ![Mobile](screenshots/mobile.png) |
+![Clinical workspace and model card](screenshots/hero.png){width=82%}
+
+![Structured report and annotated source](screenshots/report.png){width=82%}
+
+![Finding index with confidence bands, context flags and exports](screenshots/findings.png){width=82%}
+
+![Document intake with file preview and generated report](screenshots/document_intake.png){width=82%}
+
+![Responsive mobile layout](screenshots/mobile.png){width=34%}
 
 All screenshots are stored in the `screenshots/` folder.
 
