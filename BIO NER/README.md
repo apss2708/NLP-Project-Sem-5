@@ -11,6 +11,7 @@
 **Model:** BioBERT (`dmis-lab/biobert-base-cased-v1.1`) fine-tuned for token classification
 **Interface:** Streamlit — **BioNER Clinical**, a clinical-paper workbench
 **Repository:** https://github.com/apss2708/NLP-Project-Sem-5
+**Live Demo:** <https://nlp-project-bioner.streamlit.app>
 
 ---
 

@@ -6,7 +6,8 @@
 **Objective:** Identify whether a given sentence, review, or feedback is Positive, Negative, or Neutral.  
 **Model:** TF-IDF + ML (Logistic Regression, Naive Bayes, SVM)  
 **GUI:** Streamlit — the **Reel Verdict** cinematic screening room  
-**Dataset:** IMDb Movie Reviews (sample included; swap in the full corpus for stronger results)
+**Dataset:** IMDb Movie Reviews (sample included; swap in the full corpus for stronger results)  
+**Live Demo:** <https://nlp-project-sentimentanalysis.streamlit.app>
 
 ---
 

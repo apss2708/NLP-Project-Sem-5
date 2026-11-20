@@ -9,6 +9,15 @@ This repository contains two complete NLP capstone projects, each with a working
 Streamlit interface, a reproducible training pipeline, evaluation, documentation
 and screenshots.
 
+## 🚀 Live Deployments
+
+| Project | Live URL |
+|---------|----------|
+| **Project 16 — BioNER Clinical** | <https://nlp-project-bioner.streamlit.app> |
+| **Project 1 — Reel Verdict** | <https://nlp-project-sentimentanalysis.streamlit.app> |
+
+Both apps are hosted on Streamlit Community Cloud and run directly from this repository's `main` branch.
+
 ---
 
 ## Repository structure
