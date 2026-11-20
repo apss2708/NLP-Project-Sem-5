@@ -102,6 +102,7 @@ The included `sample_imdb.csv` contains 21 labelled reviews across Positive, Neg
 ## 6. Exploratory Data Analysis (EDA)
 
 EDA is documented in `EDA.ipynb` and includes:
+
 - Sentiment class distribution (count of Positive/Negative/Neutral reviews)
 - Review length distribution (word count per review)
 - Word clouds for each sentiment class
@@ -215,6 +216,18 @@ The sibling BioNER project uses a clinical teal/light “studio” language. Sen
 - **Voice:** “screening room”, “the verdict”, “critic consensus”, “dailies” — a review-site vocabulary rather than a lab dashboard
 
 The visual system is implemented entirely in custom CSS inside `app.py`; no external UI kit or JavaScript is required.
+
+### 10.6 Interface Screenshots
+
+![Reel Verdict hero and screening-room identity](screenshots/hero.png){width=70%}
+
+![Single-review verdict with scorecard and critic meters](screenshots/single_review.png){width=76%}
+
+![Batch CSV analysis with tallies, verdict bar and ledger](screenshots/batch_results.png){width=82%}
+
+![Responsive mobile layout](screenshots/mobile.png){width=34%}
+
+All screenshots are stored in the `screenshots/` folder.
 
 ---
 
